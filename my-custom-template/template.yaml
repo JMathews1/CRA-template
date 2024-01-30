@@ -1,0 +1,48 @@
+metadata:
+  title: My CRA Template
+  description: A custom Create React App template
+  tags:
+    - React
+    - CRA
+    - Custom
+  maintainer:
+    name: Your Name
+    email: your@email.com
+
+# Optional configuration for setting up the project
+scaffolder:
+  # Specify any scaffolding steps or configurations here
+  steps:
+    - id: install-dependencies
+      name: Install Dependencies
+      command: yarn install
+
+    - id: customize-project
+      name: Customize Project
+      command: yarn custom-script
+
+    # Add more steps as needed
+
+# Additional instructions or information
+instructions:
+  - title: Getting Started
+    content: |
+      1. Clone this project.
+      2. Run `yarn install` to install dependencies.
+      3. Customize the project as needed.
+      4. Start the development server with `yarn start`.
+
+# Optional configuration for dependencies or additional settings
+dependencies:
+  - name: react
+    version: ^17.0.1
+  - name: react-dom
+    version: ^17.0.1
+
+# Optional configuration for scripts
+scripts:
+  - name: custom-script
+    description: Run a custom script
+    command: yarn custom-script
+
+# Any other configuration as needed
