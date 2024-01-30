@@ -1,43 +1,83 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: My CRA Template
+  name: my-custom-template # Add a name for your template here
+  title: My CRA Template
   description: A custom Create React App template
   tags:
     - React
     - CRA
     - Custom
-  maintainer:
-    name: James Mathews
-    email: jamesm553@gmail.com
-
-# Optional configuration for setting up the project
-scaffolder:
-  # Specify any scaffolding steps or configurations here
+spec:
+  owner: jamesm553@gmail.com # Replace with the appropriate owner email
+  type: website # Specify the type of your template (if applicable)
+  parameters:
+    - title: Provide some simple information
+      required:
+        - component_id
+        - owner
+      properties:
+        component_id:
+          title: Name
+          type: string
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this template is for.
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the template
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
   steps:
-    - id: install-dependencies
-      name: Install Dependencies
-      command: yarn install
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        copyWithoutRender:
+          - .github/workflows/*
+        values:
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          owner: ${{ parameters.owner }}
 
-    - id: customize-project
-      name: Customize Project
-      command: yarn custom-script
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        allowedHosts: ["github.com"]
+        description: This is ${{ parameters.component_id }}
+        repoUrl: ${{ parameters.repoUrl }}
 
-    # Add more steps as needed
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
 
-# Additional instructions or information
-instructions:
-  - title: Getting Started
-    content: |
-      1. Clone this project.
-      2. Run `yarn install` to install dependencies.
-      3. Customize the project as needed.
-      4. Start the development server with `yarn start`.
-
-# Optional configuration for dependencies or additional settings
-dependencies:
-  - name: react
-    version: ^17.0.1
-  - name: react-dom
-    version: ^17.0.1
-
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
