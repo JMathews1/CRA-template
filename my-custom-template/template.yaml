@@ -1,3 +1,4 @@
+---
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
@@ -13,7 +14,7 @@ spec:
   type: website
   parameters:
     - title: information
-      required;
+      required:
         - component_id
         - owner
       properties:
@@ -42,7 +43,7 @@ spec:
           title: Repository Location
           type: string
           ui:field: RepoUrlPicker
-          ui:options:
+          ui:options: null
           allowedHosts:
             - github.com
   steps:
