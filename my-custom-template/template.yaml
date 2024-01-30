@@ -6,8 +6,8 @@ metadata:
     - CRA
     - Custom
   maintainer:
-    name: Your Name
-    email: your@email.com
+    name: James Mathews
+    email: jamesm553@gmail.com
 
 # Optional configuration for setting up the project
 scaffolder:
@@ -39,10 +39,3 @@ dependencies:
   - name: react-dom
     version: ^17.0.1
 
-# Optional configuration for scripts
-scripts:
-  - name: custom-script
-    description: Run a custom script
-    command: yarn custom-script
-
-# Any other configuration as needed
