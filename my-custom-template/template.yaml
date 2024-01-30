@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  title: My CRA Template
+  name: My CRA Template
   description: A custom Create React App template
   tags:
     - React
