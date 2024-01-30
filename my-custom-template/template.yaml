@@ -17,9 +17,6 @@ scaffolder:
     - id: install-dependencies
       name: Install Dependencies
       command: yarn install
-    - id: customize-project
-      name: Customize Project
-      command: yarn custom-script
 instructions:
   - title: Getting Started
     content: |
